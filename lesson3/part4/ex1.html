@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson3 part4 ex1</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body>
+    <svg id="JScontentCreation" width="100%" height="100%" />
+    <script>
+        "use strict";
+
+        function Circle(positionX, positionY, radius, fill, stroke, stroke_width) {
+            this.positionX = positionX || 0;
+            this.positionY = positionY || 0;
+            this.radius = radius || 7;
+            this.fill = fill || randColor();
+            this.stroke = stroke || randColor();
+            this.stroke_width = stroke_width || 2;
+            this.draw = () => {
+                JScontentCreation.innerHTML +=
+                    `<circle cx="${this.positionX}" cy="${this.positionY}"
+            r="${this.radius}" fill="${this.fill}"
+            stroke="${this.stroke}" stroke_width="${this.stroke_width}"/>`;
+            }
+        }
+
+        function randColor() {
+            let r = Math.floor(Math.random() * (256)),
+                g = Math.floor(Math.random() * (256)),
+                b = Math.floor(Math.random() * (256));
+            return '#' + r.toString(16) + g.toString(16) + b.toString(16);
+        }
+
+        window.addEventListener('mousemove', e => {
+            let c1 = new Circle(e.pageX, e.pageY);
+            c1.draw();
+        }, false);
+    </script>
+</body>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson3 part3 ex1</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .rubiksCube {
+        top: 130px;
+        left: 250px;
+        width: 400px;
+        height: 400px;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+
+    .rubiksCube div {
+        position: absolute;
+        height: 400px;
+        width: 400px;
+        opacity: 0.9;
+    }
+
+    .face1green {
+        top: 0;
+        left: 0;
+        transform: translate3d(0, 0, 200px);
+    }
+
+    .face2blue {
+        top: 0;
+        left: 0;
+        transform: translate3d(0, 0, -200px);
+    }
+
+    .face3yellow {
+        top: 0;
+        left: 100%;
+        transform-origin: 0 0;
+        transform: translate3d(0, 0, 200px) rotate3d(0, 1, 0, 90deg);
+    }
+
+    .face4red {
+        top: 100%;
+        left: 0;
+        transform-origin: 0 0;
+        transform: translate3d(0, 0, 200px) rotate3d(1, 0, 0, -90deg);
+    }
+
+    .face5white {
+        top: 0;
+        right: 100%;
+        transform-origin: 100% 0;
+        transform: translate3d(0, 0, 200px) rotate3d(0, 1, 0, -90deg);
+    }
+
+    .face6orange {
+        bottom: 100%;
+        left: 0;
+        transform-origin: 0 100%;
+        transform: translate3d(0, 0, 200px) rotate3d(1, 0, 0, 90deg);
+    }
+</style>
+
+<body>
+    <div class="rubiksCube">
+        <div class="face1green">
+            <img src="../resource/1.jpg" />
+        </div>
+        <div class="face2blue">
+            <img src="../resource//2.jpg" />
+        </div>
+        <div class="face3yellow">
+            <img src="../resource//3.jpg" />
+        </div>
+        <div class="face4red">
+            <img src="../resource//4.jpg" />
+        </div>
+        <div class="face5white">
+            <img src="../resource//5.jpg" />
+        </div>
+        <div class="face6orange">
+            <img src="../resource//6.jpg" />
+        </div>
+    </div>
+    <script>
+        "use strict";
+
+        let rotateX = 0, rotateY = 0, cursorPosX = 0, cursorPosY = 0;
+
+        window.addEventListener('mousemove', e => {
+            if (cursorPosX < (e.pageX - 2)) {
+                rotateY += 2
+            }
+            else if (cursorPosX > (e.pageX + 2)) {
+                rotateY -= 2
+            }
+            if (cursorPosY < (e.pageY - 2)) {
+                rotateX += 2
+            }
+            else if (cursorPosY > (e.pageY + 2)) {
+                rotateX -= 2
+            }
+            cursorPosX = e.pageX;
+            cursorPosY = e.pageY;
+            document.querySelector('.rubiksCube').style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        }, false);
+
+        let view = 2000;
+
+        document.onkeydown = e => {
+            if (e.keyCode === 38) view -= 50
+            else if (e.keyCode === 40) view += 50
+            document.querySelector('.rubiksCube').style.perspective = view + 'px';
+        }
+    </script>
+</body>
+
+</html>

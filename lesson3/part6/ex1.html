@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson3 part5 ex1</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        background: black;
+    }
+
+    button {
+        color: #fff;
+        background-color: #86cdea;
+        border-radius: 3px;
+        border: 0;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 1;
+        padding: 9px 12px;
+    }
+
+    .circle {
+        transform-origin: 50% 50% 0px;
+    }
+
+    svg {
+        stroke: cyan;
+        fill: none
+    }
+</style>
+
+<body>
+    <button id="pause">Pause</button>
+    <button id="play">Play</button>
+    <button id="reverse">Reverse</button>
+    <button id="cancel">Cancel</button>
+
+    <svg width="100%" height="100%">
+        <g id="cr1_2" class="crc">
+            <circle cx="450" cy="300" r="28" stroke-width="3" fill="red">
+            </circle>
+
+            <circle id="cr2" cx="450" cy="300" r="280" stroke-width="4" stroke-dasharray="0 1800">
+                <animate attributeName="stroke-dasharray" begin="1s" dur="7s" calcMode="linear"
+                    values="0 1114; 75 500; 150 135; 24 24; 1114 0" keyTimes="0; 0.1; 0.3; 0.5; 1" fill="freeze" />
+            </circle>
+        </g>
+        <circle id="cr3" cx="450" cy="300" r="280" stroke="yellow" stroke-width="3" stroke-dasharray="0 1800"
+            class="circle">
+        </circle>
+    </svg>
+
+    <script>
+        const r3D1 = document.getElementById('cr1_2');
+        const r3D2 = document.getElementById('cr2');
+        const r3D3 = document.getElementById('cr3');
+
+        const keyframes = [
+            { transform: 'rotate3d(0, 2, 1, 0deg)', offset: 0 },
+            { transform: 'rotate3d(0, 2, 1, 359deg)', offset: 1 }
+        ],
+            keyframes1 = [
+                { transform: 'rotate3d(2, 0, 1, 0deg)', offset: 0 },
+                { transform: 'rotate3d(2, 0, 1, 359deg)', offset: 1 }
+            ];
+
+        const options = {
+            duration: 2000,
+            easing: 'linear',
+            delay: 0,
+            iterations: Infinity,
+            direction: 'normal',
+            fill: 'forwards'
+        }
+
+        const kEffect = new KeyframeEffect(r3D1, keyframes, options);
+        const player = new Animation(kEffect, r3D1.ownerDocument.timeline);
+
+        const anim3D1 = r3D1.animate(keyframes, options);
+        const anim3D2 = r3D3.animate(keyframes1, options);
+
+        document.getElementById('pause').addEventListener('click', () => {
+            anim3D1.pause();
+            anim3D2.pause();
+        });
+        document.getElementById('play').addEventListener('click', () => {
+            anim3D1.play();
+            anim3D2.play();
+        });
+        document.getElementById('reverse').addEventListener('click', () => {
+            anim3D1.reverse();
+            anim3D2.reverse();
+        });
+        document.getElementById('cancel').addEventListener('click', () => {
+            anim3D1.cancel();
+            anim3D2.cancel();
+        });
+
+        const startTime = 7000, stepInMs = 200;
+        let i = 0, j = 200;
+
+        function start(timestamp) {
+            let progress;
+            progress = timestamp - startTime;
+            if ((progress > stepInMs) && (i < 1800) && (anim3D1.playState === 'running')) {
+                startTime = timestamp;
+                i += 1; j -= 1;
+                stepInMs -= 10;
+                r3D3.setAttribute("stroke-dasharray", i + " " + j);
+            }
+            requestAnimationFrame(start);
+        };
+        requestAnimationFrame(start);
+    </script>
+</body>

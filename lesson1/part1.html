@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 1</title>
+</head>
+<style>
+    body, svg, html {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    .test { 
+        transform-origin: 50% 50% 0px;
+        animation-name: ImgRotate;
+        animation-duration: 10s;
+        animation-iteration-count: infinity;
+        animation-delay: 1s
+    }
+    @keyframes ImgRotate {
+        50% {transform: rotate3d(2, 0, 1, 180deg);}
+        100% {transform: rotate3d(2, 0, 1, 360deg);}
+    }
+</style>
+<body>
+    <svg>
+        <image
+            id="testImg"
+            href="./resource/CssAnimationTestImage.jpg"
+            x="190"
+            y="140"
+            height="400"
+            class="test" 
+        />
+    </svg>
+</body>
+
+</html>
